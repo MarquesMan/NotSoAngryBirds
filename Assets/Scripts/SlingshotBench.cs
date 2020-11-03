@@ -23,6 +23,18 @@ public class SlingshotBench : MonoBehaviour
         releaseDelay = 1 / (springJoint.frequency * 4);
         mainCamera = Camera.main;
         componentRigidBody = GetComponent<Rigidbody2D>();
+
+        EventManager.StartListening("GameOver", GameOver);
+    }
+
+    void OnDisable()
+    {
+        EventManager.StopListening("GameOver", GameOver);
+    }
+
+    void GameOver()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
     }
 
     public void OnMouseUp()
@@ -31,6 +43,7 @@ public class SlingshotBench : MonoBehaviour
         componentRigidBody.isKinematic = false;
         // Fazer rotina para soltar o passaro
         StartCoroutine(Release());
+        EventManager.TriggerEvent("BirdFired");
     }
 
     public void OnMouseDown()
