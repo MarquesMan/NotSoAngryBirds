@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
 
-    private int enemyCount = 0;
+    private int enemyCount = 0, 
+                totalEnemyCount = 0;
     public int birdCount = 5;
     public Text birdCounterText;
     public Text enemyCounterText;
@@ -40,6 +42,8 @@ public class GameManager : MonoBehaviour
         {
             if ( enemyCount > 0)
             {
+                SaveManager.SaveLevelScore(SceneManager.GetActiveScene().name, ( 1.0f - (enemyCount*1.0f)/totalEnemyCount) );
+                SaveManager.SaveGame();
                 EventManager.TriggerEvent("GameOver");
             }
         }
@@ -47,6 +51,9 @@ public class GameManager : MonoBehaviour
 
         if (enemyCount <= 0)
         {
+            SaveManager.SaveLevelScore(SceneManager.GetActiveScene().name, 1.0f);
+            SaveManager.SaveGame();
+
             EventManager.TriggerEvent("GameWon");
             Debug.Log("GameWon");
         }
@@ -69,6 +76,7 @@ public class GameManager : MonoBehaviour
     void InsertEnemy()
     {
         enemyCount += 1;
+        totalEnemyCount += 1;
         RedrawHud();
     }
 
