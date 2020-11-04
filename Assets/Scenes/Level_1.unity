@@ -1185,7 +1185,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1117650192}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1164250099}
+        m_TargetAssemblyTypeName: LoadLevelScript, Assembly-CSharp
+        m_MethodName: LoadNextLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1117650192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1926,6 +1938,7 @@ GameObject:
   - component: {fileID: 1164250097}
   - component: {fileID: 1164250096}
   - component: {fileID: 1164250098}
+  - component: {fileID: 1164250099}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1974,6 +1987,18 @@ MonoBehaviour:
   birdCount: 5
   birdCounterText: {fileID: 1774983898}
   enemyCounterText: {fileID: 1812501889}
+--- !u!114 &1164250099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164250095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d6a1093c98e886408193a8c0d63570c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1190826349
 PrefabInstance:
   m_ObjectHideFlags: 0
