@@ -7,23 +7,27 @@ public class Enemy : MonoBehaviour
 {
     // Vida do inimigo, ou o quanto ele pode suportar de impulso
     public float health = 100.0f;
-
+    private Animator animator;
+    private bool isDead = false;
     void Start()
     {
         // Dispara evento para o GameManager contar quantos inimigos existem
         EventManager.TriggerEvent("InsertEnemy");
+        animator = GetComponent<Animator>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         // Se o impacto for maior que ele pode suportar
-        if ( GetImpactForce(collision) >= health)
+        if ( !isDead && GetImpactForce(collision) >= health)
         {
             // Dispara evento para o GameManager decrementar quantia de inimigos
             EventManager.TriggerEvent("RemoveEnemy");
 
             // Destroi esse objeto
-            Destroy(this.gameObject);
+            isDead = true;
+            animator.SetBool("isDead", isDead);
+            //Destroy(this.gameObject);
         }
     }
 

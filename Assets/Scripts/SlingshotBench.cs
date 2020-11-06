@@ -13,44 +13,54 @@ public class SlingshotBench : MonoBehaviour
     private float releaseDelay;
     private GameObject tempObject;
     private Camera mainCamera;
+    private Vector3 initialPos;
 
     public List<GameObject> listOfObjects;
+    private bool noMoreBirds = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        initialPos = transform.position;
         springJoint = GetComponent<SpringJoint2D>();
         releaseDelay = 1 / (springJoint.frequency * 4);
         mainCamera = Camera.main;
         componentRigidBody = GetComponent<Rigidbody2D>();
 
-        EventManager.StartListening("GameOver", GameOver);
+        EventManager.StartListening("NoMoreBirds", GameOver);
+
     }
 
     void OnDisable()
     {
-        EventManager.StopListening("GameOver", GameOver);
+        EventManager.StopListening("NoMoreBirds", GameOver);
+
     }
 
-    void GameOver()
-    {
-        GetComponent<BoxCollider2D>().enabled = false;
-    }
+    void GameOver() => noMoreBirds = true;
 
     public void OnMouseUp()
     {
         dragging = false;
         componentRigidBody.isKinematic = false;
+        
         // Fazer rotina para soltar o passaro
-        StartCoroutine(Release());
-        EventManager.TriggerEvent("BirdFired");
+        if (tempObject)
+        {
+            StartCoroutine(Release());
+            EventManager.TriggerEvent("BirdFired");
+        }
     }
 
     public void OnMouseDown()
     {
+
         dragging = true;
         componentRigidBody.isKinematic = true;
         // Criar clone do passarinho
+
+        if (noMoreBirds)
+            return;
         
         tempObject = Instantiate<GameObject>(listOfObjects[Random.Range(0, listOfObjects.Count)]);
         // Colocar a transform do objeto criado como a desse GameObject
@@ -80,7 +90,7 @@ public class SlingshotBench : MonoBehaviour
         {
             Rigidbody2D objectBody = tempObject.GetComponent<Rigidbody2D>();
             objectBody.isKinematic = false;
-            objectBody.velocity = springBody.velocity;
+            objectBody.velocity = springBody.velocity * 0.5f;
             tempObject.transform.SetParent(null);
             
             tempObject = null;
