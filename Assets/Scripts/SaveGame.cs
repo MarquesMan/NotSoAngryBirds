@@ -22,7 +22,7 @@ public class SaveGame
 
     public string LoadLevelScore(string levelName)
     {
-        string starts = "☆☆☆☆☆";
+        string starts = "";
 
         if (levelScore.ContainsKey(levelName))
             starts = levelScore[levelName];

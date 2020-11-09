@@ -10,27 +10,43 @@ public class LoadLevelScript : MonoBehaviour
     // Start is called before the first frame update
     public void LoadLevelByGameObjectName()
     {
-        SceneManager.LoadScene(gameObject.name);
+        LoadLevel(gameObject.name);
     }
 
     public void LoadLevelByLevelName(string levelName)
     {
-        SceneManager.LoadScene(levelName);
+        LoadLevel(levelName);
     }
 
     public void LoadNextLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        LoadLevel(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void RestarLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LoadLevel(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void MainMenu()
     {
-        SceneManager.LoadScene(0);
+        LoadLevel(0);
+    }
+
+    private void LoadLevel(int buildID)
+    {
+        if (LoadingScreen.Instance)
+            LoadingScreen.Instance.DisplayLoadingScreen(SceneManager.LoadSceneAsync(buildID));
+        else
+            SceneManager.LoadScene(buildID);
+    }
+
+    private void LoadLevel(string levelName)
+    {
+        if (LoadingScreen.Instance)
+            LoadingScreen.Instance.DisplayLoadingScreen(SceneManager.LoadSceneAsync(levelName));
+        else
+            SceneManager.LoadScene(levelName);
     }
 
 }

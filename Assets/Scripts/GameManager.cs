@@ -68,7 +68,9 @@ public class GameManager : MonoBehaviour
 
         if (enemyCount <= 0)
         {
-            SaveManager.SaveLevelScore(SceneManager.GetActiveScene().name, 1.0f);
+            Scene currentScene = SceneManager.GetActiveScene();
+            SaveManager.SaveLevelScore(currentScene.name, 1.0f);
+            // SaveManager.SaveLevelScore(SceneManager.GetSceneAt(currentScene.buildIndex).name, 0.0f);
             SaveManager.SaveGame();
 
             EventManager.TriggerEvent("GameWon");

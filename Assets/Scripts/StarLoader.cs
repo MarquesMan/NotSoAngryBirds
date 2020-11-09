@@ -10,7 +10,15 @@ public class StarLoader : MonoBehaviour
     void Start()
     {
         string score = SaveManager.LoadLevelScore(this.gameObject.name);
-        
+
+        if (score.Equals(""))
+        {
+            score = "☆☆☆☆☆";
+            if (!this.gameObject.name.Equals("Level_1"))
+                gameObject.GetComponent<Button>().interactable = false;
+            
+        }
+
         foreach(Text textChild in GetComponentsInChildren<Text>())
         {
             if (textChild.gameObject.name == "Stars")
