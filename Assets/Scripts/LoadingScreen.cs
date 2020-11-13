@@ -14,8 +14,8 @@ public class LoadingScreen : MonoBehaviour
     public float fadeInTime = 0.5f, fadeOutTime = 0.5f;
 
     private AsyncOperation currentLoadingOperation;
-    private bool isLoading;
-    private float timeElapsed;
+    private bool isLoading, readForAnotherScene;
+    private float timeElapsed, previusProgress = 0f;
     private CanvasGroup canvasGroup;
     private RectTransform barTransform;
 
@@ -45,7 +45,7 @@ public class LoadingScreen : MonoBehaviour
         currentLoadingOperation = null;
         LeanTween.cancel(bar);
         barTransform.localScale = new Vector3(0f,1f,1f);
-        isLoading = false;
+        readForAnotherScene = true;
         canvasGroup.alpha = 0f;
     }
 
@@ -56,17 +56,20 @@ public class LoadingScreen : MonoBehaviour
     {
         if (isLoading)
         {
-            SetCurrentProgress(currentLoadingOperation.progress);
 
             if (currentLoadingOperation.isDone)
             {
+                isLoading = false;
                 LeanTween.scaleX(bar, 1f, 0.1f * minTimeToShow).setOnComplete(FadeOut);
             }
             else
             {
+
                 timeElapsed += Time.deltaTime;
                 if (timeElapsed >= minTimeToShow)
                     currentLoadingOperation.allowSceneActivation = true;
+
+                SetCurrentProgress(currentLoadingOperation.progress);
             }
 
         }
@@ -75,6 +78,11 @@ public class LoadingScreen : MonoBehaviour
 
     private void SetCurrentProgress(float progress)
     {
+        if (previusProgress == progress)
+            return;
+
+        previusProgress = progress;
+
         // Scalar a barra
         bar.LeanScaleX(progress, currentLoadingOperation.allowSceneActivation? Time.deltaTime : minTimeToShow );
     }
@@ -83,6 +91,11 @@ public class LoadingScreen : MonoBehaviour
 
     public void DisplayLoadingScreen(AsyncOperation loadingOperation)
     {
+        if (!readForAnotherScene)
+            return;
+
+        readForAnotherScene = false;
+
         gameObject.SetActive(true);
 
         currentLoadingOperation = loadingOperation;

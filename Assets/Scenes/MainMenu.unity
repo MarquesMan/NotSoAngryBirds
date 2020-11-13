@@ -567,7 +567,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2143799338}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.49657625
+  m_Size: 0.6320124
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2619,6 +2619,10 @@ PrefabInstance:
       propertyPath: fadeOut
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8986914160804054413, guid: 4475e9af50fbb3a428549508bcb3f98c, type: 3}
+      propertyPath: minTimeToShow
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8986914160804054415, guid: 4475e9af50fbb3a428549508bcb3f98c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2837,7 +2841,7 @@ RectTransform:
   m_Father: {fileID: 465786394}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.50342375}
+  m_AnchorMin: {x: 0, y: 0.36798757}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
