@@ -8,6 +8,7 @@ public class Geraldo : MonoBehaviour
     void Start()
     {
         Debug.LogError("Geraldo não é um cara legal não.");
+        Debug.Log("Geraldo é um cara legal");
     }
 
     // Update is called once per frame
